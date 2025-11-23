@@ -20,7 +20,7 @@ python test_autotask_connection.py
 - Secret: `1234567890`
 - Integration Code: `12345678`
 - API URL: `https://webservices[x].autotask.net/ATServicesRest/v1.0,
-  (If you are on ww16.autotask.net then the webservices[x] would be webservices16.autotask.net
+  (If you are on ww16.autotask.net then the webservices[x] would be webservices16.autotask.net)
 
 **Expected result:**
 ```
