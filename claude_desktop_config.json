@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "autotask": {
+      "command": "python",
+      "args": [
+        "C:\\AutotaskMCP\\autotask_mcp.py"
+      ],
+      "env": {
+      "AUTOTASK_USERNAME": "your-username@company.com",
+        "AUTOTASK_SECRET": "your-api-secret-here",
+        "AUTOTASK_INTEGRATION_CODE": "your-integration-code-here",
+        "AUTOTASK_API_URL": "https://webservices5.autotask.net/ATServicesRest/v1.0"
+      }
+      }
+    }
+  }
+}
