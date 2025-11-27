@@ -7,7 +7,7 @@ company and contact management, time entries, ticket notes, and more.
 
 Key Features:
 - Ticket CRUD operations
-- TicketNotes creation (proper endpoint: /TicketNotes)
+- TicketNotes creation (proper endpoint: /Tickets/{id}/Notes)
 - TimeEntries creation (proper endpoint: /TimeEntries)
 - Company and Contact search
 - Resource lookup
@@ -411,7 +411,7 @@ async def autotask_create_ticket_note(params: CreateTicketNoteInput) -> str:
     """
     Create a note on a ticket in Autotask.
     
-    Uses the /TicketNotes endpoint (not /Tickets/{id}/Notes).
+    Uses the /Tickets/{id}/Notes endpoint (parent-child pattern).
     
     Required fields:
     - ticketId: The ticket to add the note to
@@ -433,7 +433,6 @@ async def autotask_create_ticket_note(params: CreateTicketNoteInput) -> str:
     Use autotask_get_picklist_values to get exact values for your instance.
     """
     note_data = {
-        "ticketID": params.ticket_id,
         "description": params.description,
         "noteType": params.note_type,
         "publish": params.publish,
@@ -442,7 +441,7 @@ async def autotask_create_ticket_note(params: CreateTicketNoteInput) -> str:
     if params.title:
         note_data["title"] = params.title
     
-    result = _make_request("POST", "TicketNotes", data=note_data)
+    result = _make_request("POST", f"Tickets/{params.ticket_id}/Notes", data=note_data)
     
     if "error" in result:
         return f"Error creating ticket note: {result['error']}\nDetails: {result.get('response_text', 'No details')}\n\nRequest data:\n{json.dumps(note_data, indent=2)}"
@@ -778,7 +777,7 @@ async def autotask_update_ticket_status_with_note(params: UpdateTicketStatusAndN
         "noteType": params.note_type,
         "publish": params.publish,
     }
-    note_result = _make_request("POST", "TicketNotes", data=note_data)
+    note_result = _make_request("POST", f"Tickets/{params.ticket_id}/Notes", data=note_data)
     
     if "error" in note_result:
         results.append(f"❌ Note creation failed: {note_result['error']}\nDetails: {note_result.get('response_text', 'No details')}")
